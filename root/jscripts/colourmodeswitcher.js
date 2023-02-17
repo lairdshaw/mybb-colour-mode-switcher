@@ -1,82 +1,100 @@
-$(function() {
-	var detectModeEl = document.getElementById('colourmodeswitcher_style_element_detect')
-	var $editor_head = null;
+var detectModeEl = null;
 
-	function initEditor() {
-		let $editor_iframe = $('.sceditor-container iframe');
-		if ($editor_iframe.length) {
-			$editor_head = $editor_iframe.contents().find('head');
-			if ($editor_head.length) {
-				let media = '';
-				if (colourmode != 'detect') {
-					media = ' media="max-width: 1px"';
-				}
+function initEditorForColourSwitch() {
+	$('.sceditor-container iframe').each(function() {
+		$editor_head = $(this).contents().find('head');
+		if ($editor_head && $editor_head.length) {
+			let media = '';
+			if (colourmode != 'detect') {
+				media = ' media="max-width: 1px"';
+			}
 
-				let head_style_elem =
+			let head_style_elem = '';
+			if (!$editor_head.find('#colourmodeswitcher_editor_style_element_detect').length) {
+				head_style_elem +=
 					'<style id="colourmodeswitcher_editor_style_element_detect"'+media+'>'+"\n"+
 					'	@import url("'+dark_editor_ss_url+'") (prefers-color-scheme: dark) or (prefers-dark-interface);'+"\n"+
 					'</style>';
+			}
 
-				if (colourmode == 'dark') {
+			if (colourmode == 'dark') {
+				if (!$editor_head.find('#colourmodeswitcher_editor_style_element_dark').length) {
 					head_style_elem += '<link rel="stylesheet" href="'+dark_editor_ss_url+'" id="colourmodeswitcher_editor_style_element_dark">';
 				}
-
-				$editor_head.append(head_style_elem);
 			}
-		}
-	}
 
-	function removeDarkSS() {
-		let darkModeEl = document.getElementById('colourmodeswitcher_style_element_dark');
-		if (darkModeEl) {
-			darkModeEl.remove();
+			$editor_head.append(head_style_elem);
 		}
+	});
+}
+
+function removeDarkSS() {
+	let darkModeEl = document.getElementById('colourmodeswitcher_style_element_dark');
+	if (darkModeEl) {
+		darkModeEl.remove();
+	}
+	$('.sceditor-container iframe').each(function() {
+		console.log($(this));
+		$editor_head = $(this).contents().find('head');
 		if ($editor_head && $editor_head.length) {
 			let $darkModeEditorEl = $editor_head.find('#colourmodeswitcher_editor_style_element_dark');
-			if ($darkModeEditorEl.length) {
+			if ($darkModeEditorEl && $darkModeEditorEl.length) {
 				$darkModeEditorEl.remove();
 			}
 		}
-	}
+	});
+}
 
-	function addDarkSS() {
-		$('head').append('<link rel="stylesheet" href="'+dark_ss_url+'" id="colourmodeswitcher_style_element_dark" />');
+function addDarkSS() {
+	$('head').append('<link rel="stylesheet" href="'+dark_ss_url+'" id="colourmodeswitcher_style_element_dark" />');
+	$('.sceditor-container iframe').each(function() {
+		$editor_head = $(this).contents().find('head');
 		if ($editor_head && $editor_head.length) {
 			$editor_head.append('<link rel="stylesheet" href="'+dark_editor_ss_url+'" id="colourmodeswitcher_editor_style_element_dark">');
 		}
-	}
+	});
+}
 
-	function disableDetectSS() {
-		if (!detectModeEl.hasAttribute('media')) {
-			detectModeEl.setAttribute('media', 'max-width: 1px');
-		}
+function disableDetectSS() {
+	if (!detectModeEl.hasAttribute('media')) {
+		detectModeEl.setAttribute('media', 'max-width: 1px');
+	}
+	$('.sceditor-container iframe').each(function() {
+		$editor_head = $(this).contents().find('head');
 		if ($editor_head && $editor_head.length) {
 			let $detectModeEditorEl = $editor_head.find('#colourmodeswitcher_editor_style_element_detect');
 			if ($detectModeEditorEl.length) {
 				$detectModeEditorEl.attr('media', 'max-width: 1px');
 			}
 		}
-	}
+	});
+}
 
-	function enableDetectSS() {
-		if (detectModeEl.hasAttribute('media')) {
-			detectModeEl.removeAttribute('media');
-		}
+function enableDetectSS() {
+	if (detectModeEl.hasAttribute('media')) {
+		detectModeEl.removeAttribute('media');
+	}
+	$('.sceditor-container iframe').each(function() {
+		$editor_head = $(this).contents().find('head');
 		if ($editor_head && $editor_head.length) {
 			let $detectModeEditorEl = $editor_head.find('#colourmodeswitcher_editor_style_element_detect');
 			if ($detectModeEditorEl.length) {
 				$detectModeEditorEl.removeAttr('media');
 			}
 		}
-	}
+	});
+}
 
-	function persistColourMode(mode) {
-		if (mybb_uid == 0) {
-			Cookie.set('colourmode', mode);
-		} else	$.get(rootpath+'/xmlhttp.php?action=setcolourmode&colourmode='+encodeURIComponent(mode));
-	}
+function persistColourMode(mode) {
+	if (mybb_uid == 0) {
+		Cookie.set('colourmode', mode);
+	} else	$.get(rootpath+'/xmlhttp.php?action=setcolourmode&colourmode='+encodeURIComponent(mode));
+}
 
-	setTimeout(initEditor, 1);
+$(function() {
+	detectModeEl = document.getElementById('colourmodeswitcher_style_element_detect')
+
+	setTimeout(initEditorForColourSwitch, 1);
 
 	$('#colourmode_light').on('click', function(ev) {
 		removeDarkSS();
