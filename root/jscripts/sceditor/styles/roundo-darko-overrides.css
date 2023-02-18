@@ -1,0 +1,13 @@
+html, body, p, code:before, table {
+	color: #ccc;
+}
+
+body {
+	background-color: #56575c;
+}
+
+blockquote {
+	color: #999;
+	background: #1d1c20;
+	border: 1px solid #15161b;
+}
