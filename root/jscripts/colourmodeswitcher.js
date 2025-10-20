@@ -34,7 +34,6 @@ function removeDarkSS() {
 		darkModeEl.remove();
 	}
 	$('.sceditor-container iframe').each(function() {
-		console.log($(this));
 		$editor_head = $(this).contents().find('head');
 		if ($editor_head && $editor_head.length) {
 			let $darkModeEditorEl = $editor_head.find('#colourmodeswitcher_editor_style_element_dark');
