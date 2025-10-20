@@ -28,7 +28,7 @@ function colourmodeswitcher_info() {
 		// 'website'       => '',
 		'author'        => 'Laird Shaw',
 		'authorsite'    => 'https://creativeandcritical.net/',
-		'version'       => '1.1.0',
+		'version'       => '1.1.1',
 		'guid'          => '',
 		'codename'      => 'colourmodeswitcher',
 		'compatibility' => '18*'
