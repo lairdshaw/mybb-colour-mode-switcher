@@ -1,4 +1,4 @@
-# The Colour Mode Switcher plugin for MyBB
+# A MyBB Colour Mode Switcher plugin
 
 This plugin implements Javascript-based colour mode switching (dark, light, and auto-detect modes) for the [MyBB](https://mybb.com/) forum software version 1.8.*.
 
