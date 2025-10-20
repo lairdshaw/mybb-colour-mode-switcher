@@ -2,22 +2,22 @@
 
 This plugin implements Javascript-based colour mode switching (dark, light, and auto-detect modes) for the [MyBB](https://mybb.com/) forum software version 1.8.*.
 
-It was written for [Psience Quest](https://psiencequest.net/forums/) where I (Laird) had integrated the Roundo Lite and Roundo Darko themes into a single theme, and wanted a convenient way for members to switch between the two.
+It was written for [Psience Quest](https://psiencequest.net/forums/) where I (Laird) had integrated the [Roundo](https://community.mybb.com/thread-234157.html) (default light version) and [RoundoDarko](https://community.mybb.com/thread-234174.html) themes into a single theme, and wanted a convenient way for members to switch between the two.
 
 I've uploaded it to GitHub mostly for reference purposes for the development of colour mode switching for MyBB itself in version 1.9.
 
 # Manual additions/requirements
 
-1. A manually-created "darkmode.css" stylesheet within the set of stylesheets associated with the (combined Roundo) theme stipulated by tid in the plugin's settings. I synthesised this stylesheet based on the differences between Roundo Darko and Roundo Lite. The plugin references this stylesheet within `cms_hookin__global_intermediate()`.
+1. A manually-created "darkmode.css" stylesheet within the set of stylesheets associated with the (combined Roundo) theme stipulated by tid in the plugin's settings. I synthesised this stylesheet based on the differences between RoundoDarko and Roundo. The plugin references this stylesheet within `cms_hookin__global_intermediate()`.
 
-2. The addition of the following lines to the `headerinclude` template in that Roundo theme:
+2. The addition of the following lines to the `headerinclude` template in that combined Roundo theme:
 
 ```php
 <script src="{$mybb->asset_url}/jscripts/colourmodeswitcher.js?ver=1.1.0"></script>
 {$GLOBALS['colourmodeswitcher_head_html']}
 ```
 
-3. The addition of the following lines to the `header_welcomeblock_member` template in that Roundo theme:
+3. The addition of the following lines to the `header_welcomeblock_member` template in that combined Roundo theme:
 
 ```php
 <div class="float_right" id="member_colourmode_icons">
