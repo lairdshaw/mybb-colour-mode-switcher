@@ -12,14 +12,14 @@ I've uploaded it to GitHub mostly for reference purposes for the development of 
 
 2. The addition of the following lines to the `headerinclude` template in that Roundo theme:
 
-```html
+```php
 <script src="{$mybb->asset_url}/jscripts/colourmodeswitcher.js?ver=1.1.0"></script>
 {$GLOBALS['colourmodeswitcher_head_html']}
 ```
 
 3. The addition of the following lines to the `header_welcomeblock_member` template in that Roundo theme:
 
-```html
+```php
 <div class="float_right" id="member_colourmode_icons">
 	<a href="" id="colourmode_light" title="Light colour scheme"{$GLOBALS['colourmode_light_class']}><i class="fas fa-sun"></i></a>
 	<a href="" id="colourmode_dark" title="Dark colour scheme"{$GLOBALS['colourmode_dark_class']}><i class="fas fa-moon"></i></a>
@@ -29,13 +29,13 @@ I've uploaded it to GitHub mostly for reference purposes for the development of 
 
 # Notes, especially for converting to a MyBB 1.9 implementation
 
-* The switcher icons are based on Font Awesome. I can't recall whether or not that's already available in 1.9, but if not, and the same icons are desired, then the following line (or similar; this is simply what Roundo uses) is additionally necessary in the <head> section:
+* The switcher icons are based on Font Awesome. I can't recall whether or not that's already available in 1.9, but if not, and the same icons are desired, then the following line (or similar; this is simply what Roundo uses) is additionally necessary in the `<head>` section:
 
 ```html
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 ```
 
-* The key to the auto-detect mode is the selective `@import` - based on either `[prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme): dark` or `prefers-dark-interface`, the latter of which is apparently non-standard and by now defunct, so can probably be omitted - of the darkmode CSS enclosed within the <style> element with id `colourmodeswitcher_style_element_detect`. This element (and thus the selective import) is selectively enabled/disabled via its `media` attribute (with `max-width` set to `1px` to disable it) depending on whether or not auto-detect mode is enabled/disabled.
+* The key to the auto-detect mode is the selective `@import` - based on either `[prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme): dark` or `prefers-dark-interface`, the latter of which is apparently non-standard and by now defunct, so can probably be omitted - of the darkmode CSS enclosed within the `<style>` element with id `colourmodeswitcher_style_element_detect`. This element (and thus the selective import) is selectively enabled/disabled via its `media` attribute (with `max-width` set to `1px` to disable it) depending on whether or not auto-detect mode is enabled/disabled.
 
 * The plugin tries (successfully, at least mostly, I think) to support colour mode switching in the default editor (SCEditor) too, and, to that end, includes a dark mode stylesheet for that editor.
 
